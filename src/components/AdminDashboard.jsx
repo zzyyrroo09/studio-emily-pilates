@@ -32,7 +32,7 @@ import { cn } from '../lib/utils';
 const statusColors = {
   Pending:   'bg-amber-100 text-amber-800 border-amber-200',
   Confirmed: 'bg-emerald-100 text-emerald-800 border-emerald-200',
-  Completed: 'bg-sage-100 text-sage-700 border-sage-200',
+  Completed: 'bg-ocean-100 text-ocean-700 border-ocean-200',
 };
 
 const statusOptions = ['Pending', 'Confirmed', 'Completed'];
@@ -85,7 +85,7 @@ export default function AdminDashboard({ open, onClose }) {
       setLoginError(
         err.code === 'auth/invalid-credential'
           ? 'Invalid email or password.'
-          : err.message
+          : err.mesocean
       );
     } finally {
       setLoginLoading(false);
@@ -113,20 +113,20 @@ export default function AdminDashboard({ open, onClose }) {
     <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
       {/* Overlay */}
       <div
-        className="absolute inset-0 bg-sage-950/40 backdrop-blur-sm"
+        className="absolute inset-0 bg-ocean-950/40 backdrop-blur-sm"
         onClick={onClose}
       />
 
       {/* Modal */}
       <div className="relative w-full max-w-4xl max-h-[90vh] overflow-hidden bg-white rounded-3xl shadow-2xl flex flex-col animate-slide-up">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-sage-100">
-          <h2 className="font-serif text-xl font-semibold text-sage-900">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-ocean-100">
+          <h2 className="font-serif text-xl font-semibold text-ocean-900">
             Instructor Admin Portal
           </h2>
           <button
             onClick={onClose}
-            className="p-2 rounded-xl hover:bg-sage-50 text-sage-500 transition-colors"
+            className="p-2 rounded-xl hover:bg-ocean-50 text-ocean-500 transition-colors"
           >
             <X size={20} />
           </button>
@@ -136,11 +136,11 @@ export default function AdminDashboard({ open, onClose }) {
         <div className="flex-1 overflow-y-auto p-6">
           {/* Firebase not configured */}
           {!hasValidConfig && (
-            <div className="flex items-start gap-3 p-4 rounded-2xl bg-warm-100 border border-warm-200 text-warm-800 text-sm">
+            <div className="flex items-start gap-3 p-4 rounded-2xl bg-driftwood-100 border border-driftwood-200 text-driftwood-800 text-sm">
               <AlertTriangle size={18} className="flex-shrink-0 mt-0.5" />
               <p>
                 Firebase is not configured. Add your credentials to{' '}
-                <code className="bg-warm-200 px-1 rounded">.env.local</code>{' '}
+                <code className="bg-driftwood-200 px-1 rounded">.env.local</code>{' '}
                 and restart the server to enable authentication and the live
                 booking dashboard.
               </p>
@@ -150,7 +150,7 @@ export default function AdminDashboard({ open, onClose }) {
           {/* Auth check loading */}
           {hasValidConfig && !authChecked && (
             <div className="flex items-center justify-center py-16">
-              <Loader2 size={24} className="animate-spin text-sage-400" />
+              <Loader2 size={24} className="animate-spin text-ocean-400" />
             </div>
           )}
 
@@ -162,10 +162,10 @@ export default function AdminDashboard({ open, onClose }) {
                 className="max-w-sm mx-auto space-y-4 py-8"
               >
                 <div className="text-center mb-6">
-                  <div className="w-14 h-14 mx-auto rounded-2xl bg-sage-100 flex items-center justify-center mb-3">
-                    <LogIn size={24} className="text-sage-600" />
+                  <div className="w-14 h-14 mx-auto rounded-2xl bg-ocean-100 flex items-center justify-center mb-3">
+                    <LogIn size={24} className="text-ocean-600" />
                   </div>
-                  <p className="text-sage-600 text-sm">
+                  <p className="text-ocean-600 text-sm">
                     Sign in with your instructor account
                   </p>
                 </div>
@@ -181,19 +181,19 @@ export default function AdminDashboard({ open, onClose }) {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email address"
-                  className="w-full px-4 py-3 rounded-xl bg-sage-50 border border-sage-200 text-sage-900 placeholder:text-sage-400 focus:outline-none focus:ring-2 focus:ring-sage-400 focus:border-transparent transition-all text-sm"
+                  className="w-full px-4 py-3 rounded-xl bg-ocean-50 border border-ocean-200 text-ocean-900 placeholder:text-ocean-400 focus:outline-none focus:ring-2 focus:ring-ocean-400 focus:border-transparent transition-all text-sm"
                 />
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Password"
-                  className="w-full px-4 py-3 rounded-xl bg-sage-50 border border-sage-200 text-sage-900 placeholder:text-sage-400 focus:outline-none focus:ring-2 focus:ring-sage-400 focus:border-transparent transition-all text-sm"
+                  className="w-full px-4 py-3 rounded-xl bg-ocean-50 border border-ocean-200 text-ocean-900 placeholder:text-ocean-400 focus:outline-none focus:ring-2 focus:ring-ocean-400 focus:border-transparent transition-all text-sm"
                 />
                 <button
                   type="submit"
                   disabled={loginLoading}
-                  className="w-full flex items-center justify-center gap-2 py-3 bg-sage-600 hover:bg-sage-700 disabled:opacity-60 text-white font-semibold rounded-xl transition-colors"
+                  className="w-full flex items-center justify-center gap-2 py-3 bg-ocean-600 hover:bg-ocean-700 disabled:opacity-60 text-white font-semibold rounded-xl transition-colors"
                 >
                   {loginLoading ? (
                     <Loader2 size={16} className="animate-spin" />
@@ -209,16 +209,16 @@ export default function AdminDashboard({ open, onClose }) {
           {user && (
             <div>
               {/* User bar */}
-              <div className="flex items-center justify-between mb-6 p-3 rounded-2xl bg-sage-50">
-                <p className="text-sm text-sage-600">
+              <div className="flex items-center justify-between mb-6 p-3 rounded-2xl bg-ocean-50">
+                <p className="text-sm text-ocean-600">
                   Signed in as{' '}
-                  <span className="font-medium text-sage-800">
+                  <span className="font-medium text-ocean-800">
                     {user.email}
                   </span>
                 </p>
                 <button
                   onClick={handleLogout}
-                  className="flex items-center gap-1.5 text-sm text-sage-500 hover:text-sage-700 transition-colors"
+                  className="flex items-center gap-1.5 text-sm text-ocean-500 hover:text-ocean-700 transition-colors"
                 >
                   <LogOut size={14} />
                   Sign Out
@@ -227,13 +227,13 @@ export default function AdminDashboard({ open, onClose }) {
 
               {/* Bookings */}
               {bookings.length === 0 ? (
-                <div className="text-center py-16 text-sage-400">
+                <div className="text-center py-16 text-ocean-400">
                   <Calendar size={32} className="mx-auto mb-3 opacity-50" />
                   <p>No bookings yet.</p>
                 </div>
               ) : (
                 <div className="space-y-4">
-                  <p className="text-sm font-medium text-sage-500">
+                  <p className="text-sm font-medium text-ocean-500">
                     {bookings.length} booking
                     {bookings.length !== 1 ? 's' : ''}
                   </p>
@@ -268,21 +268,21 @@ function BookingCard({ booking, onStatusChange }) {
     : '—';
 
   return (
-    <div className="rounded-2xl border border-sage-100 bg-white overflow-hidden hover:border-sage-200 transition-colors">
+    <div className="rounded-2xl border border-ocean-100 bg-white overflow-hidden hover:border-ocean-200 transition-colors">
       {/* Summary row */}
       <button
         onClick={() => setOpen(!open)}
         className="w-full flex items-center justify-between px-5 py-4 text-left"
       >
         <div className="flex items-center gap-3 min-w-0">
-          <div className="w-9 h-9 rounded-full bg-sage-100 flex items-center justify-center flex-shrink-0">
-            <User size={16} className="text-sage-600" />
+          <div className="w-9 h-9 rounded-full bg-ocean-100 flex items-center justify-center flex-shrink-0">
+            <User size={16} className="text-ocean-600" />
           </div>
           <div className="min-w-0">
-            <p className="font-medium text-sage-900 text-sm truncate">
+            <p className="font-medium text-ocean-900 text-sm truncate">
               {b.fullName}
             </p>
-            <p className="text-xs text-sage-400 truncate">{b.serviceType}</p>
+            <p className="text-xs text-ocean-400 truncate">{b.serviceType}</p>
           </div>
         </div>
 
@@ -309,7 +309,7 @@ function BookingCard({ booking, onStatusChange }) {
           <ChevronDown
             size={16}
             className={cn(
-              'text-sage-400 transition-transform',
+              'text-ocean-400 transition-transform',
               open && 'rotate-180'
             )}
           />
@@ -318,7 +318,7 @@ function BookingCard({ booking, onStatusChange }) {
 
       {/* Expanded details */}
       {open && (
-        <div className="px-5 pb-5 pt-1 border-t border-sage-50 grid sm:grid-cols-2 gap-3 text-sm">
+        <div className="px-5 pb-5 pt-1 border-t border-ocean-50 grid sm:grid-cols-2 gap-3 text-sm">
           <Detail icon={Phone} label="Phone" value={b.phone} />
           <Detail icon={Mail} label="Email" value={b.email} />
           <Detail icon={Calendar} label="Preferred Date" value={b.preferredDate} />
@@ -328,7 +328,7 @@ function BookingCard({ booking, onStatusChange }) {
               <Detail icon={Target} label="Goals / Notes" value={b.goals} />
             </div>
           )}
-          <p className="sm:col-span-2 text-xs text-sage-400 mt-1">
+          <p className="sm:col-span-2 text-xs text-ocean-400 mt-1">
             Submitted: {dateStr}
           </p>
         </div>
@@ -340,10 +340,10 @@ function BookingCard({ booking, onStatusChange }) {
 function Detail({ icon: Icon, label, value }) {
   return (
     <div className="flex items-start gap-2">
-      <Icon size={14} className="text-sage-400 mt-0.5 flex-shrink-0" />
+      <Icon size={14} className="text-ocean-400 mt-0.5 flex-shrink-0" />
       <div>
-        <p className="text-xs text-sage-400">{label}</p>
-        <p className="text-sage-800">{value || '—'}</p>
+        <p className="text-xs text-ocean-400">{label}</p>
+        <p className="text-ocean-800">{value || '—'}</p>
       </div>
     </div>
   );

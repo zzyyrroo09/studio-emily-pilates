@@ -3,34 +3,19 @@ import { cn } from '../lib/utils';
 
 const packages = [
   {
-    name: 'Private Reformer Pilates',
-    type: '1-on-1 session',
-    price: '₱1,500',
+    name: 'Private Pilates Session',
+    type: 'Reformer or Mat',
+    price: '₱1,600',
     perSession: 'per session',
-    description: 'A fully personalized session tailored to your body, goals, and pace.',
+    description: 'A fully personalized 1-on-1 session tailored to your body, goals, and pace.',
     features: [
+      'Choose Reformer or Mat Pilates',
       'Customized program design',
-      'Individual Reformer instruction',
       'Posture & alignment assessment',
       'Progress tracking',
       '55-minute session',
     ],
     popular: true,
-  },
-  {
-    name: 'Private Mat Pilates',
-    type: '1-on-1 session',
-    price: '₱1,500',
-    perSession: 'per session',
-    description: 'Build strength and mobility through focused, equipment-free movement.',
-    features: [
-      'Customized program design',
-      'Mat-based Pilates practice',
-      'Posture & alignment assessment',
-      'Progress tracking',
-      '55-minute session',
-    ],
-    popular: false,
   },
   {
     name: 'Duet Pilates Session',
@@ -66,40 +51,44 @@ const packages = [
 
 export default function Services() {
   return (
-    <section id="services" className="py-20 sm:py-28 bg-cream-50">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="services" className="py-24 sm:py-32 relative bg-driftwood-50 overflow-hidden">
+      {/* Decorative Beach Vibes */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gold-200/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-ocean-200/20 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/3 pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section header */}
         <div className="text-center mb-16">
-          <p className="text-sage-500 font-medium text-sm uppercase tracking-widest mb-3">
+          <p className="text-gold-500 font-medium text-sm uppercase tracking-widest mb-3">
             Services &amp; Pricing
           </p>
-          <h2 className="font-serif text-3xl sm:text-4xl font-semibold text-sage-900 mb-4">
+          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-semibold text-ocean-900 mb-6">
             Find the session that{' '}
-            <span className="italic text-sage-600">fits you</span>
+            <span className="italic text-ocean-600">fits you</span>
           </h2>
-          <p className="text-sage-500 max-w-xl mx-auto">
+          <p className="text-ocean-700 max-w-xl mx-auto text-lg">
             Choose focused Reformer or Mat Pilates, bring a partner, or move
             together in a small group by the coast.
           </p>
         </div>
 
         {/* Pricing cards */}
-        <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6 lg:gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto">
           {packages.map((pkg) => (
             <div
               key={pkg.name}
               className={cn(
-                'relative flex flex-col rounded-3xl border p-6 sm:p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl',
+                'relative flex flex-col rounded-3xl p-8 transition-all duration-500 hover:-translate-y-2',
                 pkg.popular
-                  ? 'bg-sage-800 text-white border-sage-700 shadow-lg shadow-sage-800/20'
-                  : 'bg-white border-sage-100 hover:border-sage-200'
+                  ? 'bg-ocean-900 text-white shadow-2xl shadow-ocean-900/30'
+                  : 'bg-white/80 backdrop-blur-md border border-white/60 hover:bg-white shadow-xl shadow-driftwood-900/5'
               )}
             >
               {/* Popular badge */}
               {pkg.popular && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-warm-400 text-white text-xs font-semibold shadow-sm">
-                    <Star size={12} fill="currentColor" />
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                  <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-gold-400 text-ocean-950 text-xs font-bold tracking-wide shadow-lg shadow-gold-500/20">
+                    <Star size={14} fill="currentColor" />
                     Most Popular
                   </div>
                 </div>
@@ -109,16 +98,16 @@ export default function Services() {
               <div className="mb-6">
                 <p
                   className={cn(
-                    'text-xs font-medium uppercase tracking-wider mb-2',
-                    pkg.popular ? 'text-sage-300' : 'text-sage-400'
+                    'text-xs font-semibold uppercase tracking-widest mb-3',
+                    pkg.popular ? 'text-gold-400' : 'text-ocean-500'
                   )}
                 >
                   {pkg.type}
                 </p>
                 <h3
                   className={cn(
-                    'font-serif text-xl font-semibold mb-1',
-                    pkg.popular ? 'text-white' : 'text-sage-900'
+                    'font-serif text-2xl font-semibold mb-2',
+                    pkg.popular ? 'text-white' : 'text-ocean-900'
                   )}
                 >
                   {pkg.name}
@@ -126,7 +115,7 @@ export default function Services() {
                 <p
                   className={cn(
                     'text-sm leading-relaxed',
-                    pkg.popular ? 'text-sage-300' : 'text-sage-500'
+                    pkg.popular ? 'text-ocean-100/80' : 'text-ocean-600'
                   )}
                 >
                   {pkg.description}
@@ -134,19 +123,19 @@ export default function Services() {
               </div>
 
               {/* Price */}
-              <div className="mb-6">
+              <div className="mb-8 flex items-baseline gap-1.5">
                 <span
                   className={cn(
-                    'text-4xl font-bold',
-                    pkg.popular ? 'text-white' : 'text-sage-900'
+                    'text-4xl font-bold tracking-tight',
+                    pkg.popular ? 'text-white' : 'text-ocean-900'
                   )}
                 >
                   {pkg.price}
                 </span>
                 <span
                   className={cn(
-                    'text-sm ml-1',
-                    pkg.popular ? 'text-sage-300' : 'text-sage-400'
+                    'text-sm font-medium',
+                    pkg.popular ? 'text-ocean-200' : 'text-ocean-500'
                   )}
                 >
                   {pkg.perSession}
@@ -154,20 +143,20 @@ export default function Services() {
               </div>
 
               {/* Features */}
-              <ul className="flex-1 space-y-3 mb-8">
+              <ul className="flex-1 space-y-4 mb-8">
                 {pkg.features.map((feat) => (
                   <li key={feat} className="flex items-start gap-3">
                     <Check
-                      size={16}
+                      size={18}
                       className={cn(
                         'flex-shrink-0 mt-0.5',
-                        pkg.popular ? 'text-sage-300' : 'text-sage-500'
+                        pkg.popular ? 'text-gold-400' : 'text-ocean-500'
                       )}
                     />
                     <span
                       className={cn(
-                        'text-sm',
-                        pkg.popular ? 'text-sage-200' : 'text-sage-600'
+                        'text-sm leading-relaxed',
+                        pkg.popular ? 'text-ocean-50' : 'text-ocean-700'
                       )}
                     >
                       {feat}
@@ -180,10 +169,10 @@ export default function Services() {
               <a
                 href="#booking"
                 className={cn(
-                  'block w-full text-center py-3 rounded-xl font-semibold text-sm transition-all',
+                  'block w-full text-center py-3.5 rounded-full font-semibold text-sm transition-all duration-300',
                   pkg.popular
-                    ? 'bg-white text-sage-800 hover:bg-sage-50'
-                    : 'bg-sage-600 text-white hover:bg-sage-700'
+                    ? 'bg-gold-400 text-ocean-950 hover:bg-gold-300 hover:shadow-lg hover:shadow-gold-400/20'
+                    : 'bg-ocean-100 text-ocean-900 hover:bg-ocean-800 hover:text-white'
                 )}
               >
                 Book This Session

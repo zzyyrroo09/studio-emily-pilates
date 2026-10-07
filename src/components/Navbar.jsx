@@ -22,21 +22,27 @@ export default function Navbar({ onAdminClick }) {
   return (
     <nav
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+        'fixed top-4 left-4 right-4 z-50 transition-all duration-300 max-w-6xl mx-auto rounded-3xl',
         scrolled
-          ? 'bg-cream-50/95 backdrop-blur-md shadow-sm'
-          : 'bg-transparent'
+          ? 'bg-white/85 backdrop-blur-md shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-white/40'
+          : 'bg-white/10 backdrop-blur-sm border border-white/20'
       )}
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-20">
+      <div className="px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <a href="#home" className="flex items-center gap-2 group">
-            <div className="w-9 h-9 rounded-full bg-sage-500 flex items-center justify-center transition-transform group-hover:scale-105">
-              <span className="text-white font-serif text-lg font-semibold">E</span>
+          <a href="#home" className="flex items-center gap-3 group">
+            <div className={cn(
+              "w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-105",
+              scrolled ? "bg-ocean-600 text-white" : "bg-white text-ocean-900"
+            )}>
+              <span className="font-serif text-lg font-semibold">E</span>
             </div>
-            <span className="font-serif text-xl font-semibold text-sage-800 tracking-tight">
-              Studio Emily Pilates
+            <span className={cn(
+              "font-serif text-lg font-semibold tracking-tight transition-colors",
+              scrolled ? "text-ocean-900" : "text-white"
+            )}>
+              Studio Emily
             </span>
           </a>
 
@@ -46,14 +52,22 @@ export default function Navbar({ onAdminClick }) {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm font-medium text-sage-700 hover:text-sage-900 transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-sage-500 after:transition-all hover:after:w-full"
+                className={cn(
+                  "text-sm font-medium transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:transition-all hover:after:w-full",
+                  scrolled 
+                    ? "text-ocean-700 hover:text-ocean-900 after:bg-ocean-500" 
+                    : "text-sand-100 hover:text-white after:bg-gold-400"
+                )}
               >
                 {link.label}
               </a>
             ))}
             <button
               onClick={onAdminClick}
-              className="text-xs font-medium text-sage-400 hover:text-sage-600 transition-colors"
+              className={cn(
+                "text-xs font-medium transition-colors",
+                scrolled ? "text-ocean-400 hover:text-ocean-600" : "text-white/60 hover:text-white"
+              )}
             >
               Instructor Login
             </button>
@@ -61,7 +75,10 @@ export default function Navbar({ onAdminClick }) {
 
           {/* Mobile hamburger */}
           <button
-            className="md:hidden p-2 rounded-lg text-sage-700 hover:bg-sage-100 transition-colors"
+            className={cn(
+              "md:hidden p-2 rounded-lg transition-colors",
+              scrolled ? "text-ocean-700 hover:bg-ocean-50" : "text-white hover:bg-white/20"
+            )}
             onClick={() => setOpen(!open)}
             aria-label="Toggle menu"
           >
@@ -73,24 +90,24 @@ export default function Navbar({ onAdminClick }) {
       {/* Mobile menu */}
       <div
         className={cn(
-          'md:hidden overflow-hidden transition-all duration-300 bg-cream-50/98 backdrop-blur-md',
-          open ? 'max-h-80 border-b border-sage-100' : 'max-h-0'
+          'md:hidden overflow-hidden transition-all duration-300 absolute top-full left-0 right-0 mt-2 rounded-3xl bg-white/95 backdrop-blur-md shadow-xl border border-ocean-100',
+          open ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0 border-transparent'
         )}
       >
-        <div className="px-4 py-4 space-y-1">
+        <div className="px-4 py-4 space-y-2">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className="block py-2.5 px-3 rounded-xl text-sage-700 font-medium hover:bg-sage-50 transition-colors"
+              className="block py-3 px-4 rounded-2xl text-ocean-800 font-medium hover:bg-ocean-50 transition-colors"
             >
               {link.label}
             </a>
           ))}
           <button
             onClick={() => { onAdminClick(); setOpen(false); }}
-            className="block w-full text-left py-2.5 px-3 rounded-xl text-sage-400 text-sm hover:bg-sage-50 transition-colors"
+            className="block w-full text-left py-3 px-4 rounded-2xl text-ocean-500 text-sm hover:bg-ocean-50 transition-colors"
           >
             Instructor Login
           </button>

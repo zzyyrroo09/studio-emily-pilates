@@ -2,14 +2,15 @@ import { useState } from 'react';
 import { Send, Loader2, CheckCircle2, AlertTriangle } from 'lucide-react';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db, hasValidConfig } from '../firebase';
+import emailjs from '@emailjs/browser';
 import { cn } from '../lib/utils';
 
 const serviceOptions = [
-  'Private Reformer Pilates',
-  'Private Mat Pilates',
-  'Duet Reformer Pilates',
-  'Duet Mat Pilates',
-  'Small Group Mat Pilates',
+  'Private Reformer Pilates (₱1,600)',
+  'Private Mat Pilates (₱1,600)',
+  'Duet Reformer Pilates (₱1,200/person)',
+  'Duet Mat Pilates (₱1,200/person)',
+  'Small Group Mat Pilates (₱800/person)',
 ];
 
 const timeSlots = [
@@ -39,7 +40,7 @@ export default function BookingForm() {
   const validate = () => {
     if (!form.fullName.trim()) return 'Please enter your full name.';
     if (!form.phone.trim()) return 'Please enter your phone/Viber number.';
-    if (!form.email.trim() || !/\S+@\S+\.\S+/.test(form.email))
+    if (!form.email.trim() || !/^\S+@\S+\.\S+$/.test(form.email))
       return 'Please enter a valid email address.';
     if (!form.serviceType) return 'Please select a service type.';
     if (!form.preferredDate) return 'Please select a preferred date.';
@@ -58,7 +59,7 @@ export default function BookingForm() {
     }
 
     if (!hasValidConfig || !db) {
-      // Demo mode — pretend success
+      // Demo mode
       setStatus('loading');
       await new Promise((r) => setTimeout(r, 1200));
       setStatus('success');
@@ -72,6 +73,29 @@ export default function BookingForm() {
         status: 'Pending',
         createdAt: serverTimestamp(),
       });
+
+      // --- EMAIL NOTIFICATION LOGIC ---
+      try {
+        await emailjs.send(
+          'service_ac8bpzs',     // 1. Replace with your EmailJS Service ID
+          'template_jnib767',    // 2. Replace with your EmailJS Template ID
+          {
+            to_name: 'Emily',
+            client_name: form.fullName,
+            client_email: form.email,
+            client_phone: form.phone,
+            service_type: form.serviceType,
+            preferred_date: form.preferredDate,
+            preferred_time: form.preferredTime,
+            goals: form.goals || 'No additional notes',
+          },
+          'pPtxEB7O1vn25Smxc'      // 3. Replace with your EmailJS Public Key
+        );
+      } catch (emailErr) {
+        console.error('Email notification failed, but booking was saved:', emailErr);
+      }
+      // --------------------------------
+
       setStatus('success');
       setForm(initialForm);
     } catch (err) {
@@ -81,26 +105,24 @@ export default function BookingForm() {
     }
   };
 
-  // Today's date for min-date
   const today = new Date().toISOString().split('T')[0];
 
-  // Success state
   if (status === 'success') {
     return (
-      <section id="booking" className="py-20 sm:py-28 bg-white">
+      <section id="booking" className="py-20 sm:py-32 bg-sand-50 relative">
         <div className="max-w-xl mx-auto px-4 sm:px-6 text-center">
-          <div className="p-8 sm:p-12 rounded-3xl bg-sage-50 border border-sage-100">
-            <CheckCircle2 className="mx-auto text-sage-600 mb-4" size={48} />
-            <h3 className="font-serif text-2xl font-semibold text-sage-900 mb-2">
-              Booking Submitted!
+          <div className="p-8 sm:p-16 rounded-3xl bg-sand-50 border border-sand-100 shadow-xl shadow-sand-100/50">
+            <CheckCircle2 className="mx-auto text-gold-500 mb-6" size={56} />
+            <h3 className="font-serif text-3xl font-semibold text-ocean-900 mb-4">
+              Request Sent!
             </h3>
-            <p className="text-sage-600 mb-6">
-              Thank you for your interest! We'll review your request and reach
-              out shortly via Viber or email to confirm your session.
+            <p className="text-ocean-600 mb-8 leading-relaxed">
+              Thank you for choosing Studio Emily Pilates. We'll review your request and reach
+              out shortly via Viber or email to confirm your coastal session.
             </p>
             <button
               onClick={() => setStatus('idle')}
-              className="px-6 py-2.5 bg-sage-600 text-white rounded-xl font-medium hover:bg-sage-700 transition-colors"
+              className="px-8 py-3.5 bg-ocean-800 text-white rounded-full font-medium hover:bg-ocean-900 transition-colors shadow-lg"
             >
               Book Another Session
             </button>
@@ -111,51 +133,48 @@ export default function BookingForm() {
   }
 
   return (
-    <section id="booking" className="py-20 sm:py-28 bg-white">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section header */}
+    <section id="booking" className="py-20 sm:py-32 bg-sand-50 relative overflow-hidden">
+      {/* Decorative Wave BG */}
+      <div className="absolute top-0 right-0 w-full h-full opacity-30 pointer-events-none" 
+           style={{ background: 'radial-gradient(circle at top right, var(--color-ocean-50) 0%, transparent 50%)' }} />
+
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-12">
-          <p className="text-sage-500 font-medium text-sm uppercase tracking-widest mb-3">
+          <p className="text-gold-500 font-medium text-sm uppercase tracking-widest mb-3">
             Book a Session
           </p>
-          <h2 className="font-serif text-3xl sm:text-4xl font-semibold text-sage-900 mb-4">
+          <h2 className="font-serif text-3xl sm:text-4xl font-semibold text-ocean-900 mb-4">
             Ready to start your{' '}
-            <span className="italic text-sage-600">journey</span>?
+            <span className="italic text-ocean-600">journey</span>?
           </h2>
-          <p className="text-sage-500 max-w-lg mx-auto">
-            Fill out the form below and we'll reach out to confirm your
-            preferred schedule.
+          <p className="text-ocean-600 max-w-lg mx-auto">
+            Fill out the form below and we'll reach out to confirm your preferred schedule by the sea.
           </p>
         </div>
 
-        {/* Firebase not configured banner */}
         {!hasValidConfig && (
-          <div className="mb-6 flex items-start gap-3 p-4 rounded-2xl bg-warm-100 border border-warm-200 text-warm-800 text-sm">
-            <AlertTriangle size={18} className="flex-shrink-0 mt-0.5" />
+          <div className="mb-8 flex items-start gap-3 p-4 rounded-2xl bg-driftwood-50 border border-driftwood-200 text-driftwood-800 text-sm shadow-sm">
+            <AlertTriangle size={18} className="flex-shrink-0 mt-0.5 text-gold-600" />
             <p>
               <strong>Demo mode:</strong> Firebase is not configured yet. The
               form will simulate a submission. Add your credentials to{' '}
-              <code className="bg-warm-200 px-1 rounded">.env.local</code> and
-              restart the server.
+              <code className="bg-white px-1.5 py-0.5 rounded shadow-sm">.env.local</code>.
             </p>
           </div>
         )}
 
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Error message */}
+        <form onSubmit={handleSubmit} className="space-y-6 p-8 sm:p-10 rounded-3xl bg-white shadow-2xl shadow-ocean-900/5 border border-ocean-50">
           {errorMsg && (
-            <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm flex items-start gap-3">
+            <div className="p-4 rounded-xl bg-red-50 border border-red-100 text-red-700 text-sm flex items-start gap-3 mb-6">
               <AlertTriangle size={16} className="flex-shrink-0 mt-0.5" />
               {errorMsg}
             </div>
           )}
 
-          {/* Row: Name + Phone */}
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid sm:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-medium text-sage-700 mb-1.5">
-                Full Name <span className="text-red-400">*</span>
+              <label className="block text-sm font-semibold text-ocean-800 mb-2">
+                Full Name <span className="text-gold-500">*</span>
               </label>
               <input
                 type="text"
@@ -167,8 +186,8 @@ export default function BookingForm() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-sage-700 mb-1.5">
-                Phone / Viber Number <span className="text-red-400">*</span>
+              <label className="block text-sm font-semibold text-ocean-800 mb-2">
+                Phone / Viber Number <span className="text-gold-500">*</span>
               </label>
               <input
                 type="tel"
@@ -181,10 +200,9 @@ export default function BookingForm() {
             </div>
           </div>
 
-          {/* Email */}
           <div>
-            <label className="block text-sm font-medium text-sage-700 mb-1.5">
-              Email Address <span className="text-red-400">*</span>
+            <label className="block text-sm font-semibold text-ocean-800 mb-2">
+              Email Address <span className="text-gold-500">*</span>
             </label>
             <input
               type="email"
@@ -196,18 +214,17 @@ export default function BookingForm() {
             />
           </div>
 
-          {/* Service Type */}
           <div>
-            <label className="block text-sm font-medium text-sage-700 mb-1.5">
-              Service Type <span className="text-red-400">*</span>
+            <label className="block text-sm font-semibold text-ocean-800 mb-2">
+              Service Type <span className="text-gold-500">*</span>
             </label>
             <select
               name="serviceType"
               value={form.serviceType}
               onChange={handleChange}
-              className={cn(inputClass, !form.serviceType && 'text-sage-400')}
+              className={cn(inputClass, !form.serviceType && 'text-ocean-400')}
             >
-              <option value="">Select a service…</option>
+              <option value="">Select a service...</option>
               {serviceOptions.map((opt) => (
                 <option key={opt} value={opt}>
                   {opt}
@@ -216,11 +233,10 @@ export default function BookingForm() {
             </select>
           </div>
 
-          {/* Date + Time */}
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid sm:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-medium text-sage-700 mb-1.5">
-                Preferred Date <span className="text-red-400">*</span>
+              <label className="block text-sm font-semibold text-ocean-800 mb-2">
+                Preferred Date <span className="text-gold-500">*</span>
               </label>
               <input
                 type="date"
@@ -228,20 +244,20 @@ export default function BookingForm() {
                 value={form.preferredDate}
                 onChange={handleChange}
                 min={today}
-                className={cn(inputClass, !form.preferredDate && 'text-sage-400')}
+                className={cn(inputClass, !form.preferredDate && 'text-ocean-400')}
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-sage-700 mb-1.5">
-                Preferred Time Slot <span className="text-red-400">*</span>
+              <label className="block text-sm font-semibold text-ocean-800 mb-2">
+                Preferred Time Slot <span className="text-gold-500">*</span>
               </label>
               <select
                 name="preferredTime"
                 value={form.preferredTime}
                 onChange={handleChange}
-                className={cn(inputClass, !form.preferredTime && 'text-sage-400')}
+                className={cn(inputClass, !form.preferredTime && 'text-ocean-400')}
               >
-                <option value="">Select a time…</option>
+                <option value="">Select a time...</option>
                 {timeSlots.map((t) => (
                   <option key={t} value={t}>
                     {t}
@@ -251,9 +267,8 @@ export default function BookingForm() {
             </div>
           </div>
 
-          {/* Goals / Notes */}
           <div>
-            <label className="block text-sm font-medium text-sage-700 mb-1.5">
+            <label className="block text-sm font-semibold text-ocean-800 mb-2">
               Fitness Goals / Notes
             </label>
             <textarea
@@ -261,21 +276,28 @@ export default function BookingForm() {
               value={form.goals}
               onChange={handleChange}
               rows={4}
-              placeholder="Tell us about your goals, injuries, or anything we should know…"
+              placeholder="Tell us about your goals, injuries, or anything we should know..."
               className={cn(inputClass, 'resize-none')}
             />
           </div>
 
-          {/* Submit */}
+          <div className="bg-sand-50/50 p-4 rounded-2xl border border-ocean-100 flex items-start gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gold-600 flex-shrink-0 mt-0.5"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+            <div className="text-sm text-ocean-800">
+              <span className="font-semibold block mb-1">Payment Method</span>
+              We accept payments via GCash: <strong>09560333082</strong>. Please settle your payment upon confirmation of your slot to secure your booking.
+            </div>
+          </div>
+
           <button
             type="submit"
             disabled={status === 'loading'}
-            className="w-full flex items-center justify-center gap-2 py-3.5 bg-sage-600 hover:bg-sage-700 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold rounded-2xl shadow-lg shadow-sage-600/20 transition-all hover:shadow-xl"
+            className="w-full flex items-center justify-center gap-2 py-4 bg-ocean-800 hover:bg-ocean-900 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold rounded-full shadow-lg shadow-ocean-900/20 transition-all hover:shadow-xl mt-4"
           >
             {status === 'loading' ? (
               <>
                 <Loader2 size={18} className="animate-spin" />
-                Submitting…
+                Submitting...
               </>
             ) : (
               <>
@@ -290,6 +312,5 @@ export default function BookingForm() {
   );
 }
 
-// Shared input styling
 const inputClass =
-  'w-full px-4 py-3 rounded-xl bg-sage-50 border border-sage-200 text-sage-900 placeholder:text-sage-400 focus:outline-none focus:ring-2 focus:ring-sage-400 focus:border-transparent transition-all text-sm';
+  'w-full px-5 py-3.5 rounded-2xl bg-sand-50/50 border border-ocean-100 text-ocean-900 placeholder:text-ocean-300 focus:outline-none focus:ring-2 focus:ring-gold-400 focus:border-transparent transition-all text-sm';

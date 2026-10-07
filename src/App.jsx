@@ -11,7 +11,7 @@ export default function App() {
   const [adminOpen, setAdminOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-cream-50">
+    <div className="min-h-screen bg-sand-50">
       <Navbar onAdminClick={() => setAdminOpen(true)} />
       <main>
         <Hero />

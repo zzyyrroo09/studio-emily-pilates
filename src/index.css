@@ -2,36 +2,40 @@
 @import "tailwindcss";
 
 @theme {
-  --color-sage-50: #f6f7f4;
-  --color-sage-100: #eaede4;
-  --color-sage-200: #d5dbca;
-  --color-sage-300: #b8c3a5;
-  --color-sage-400: #99a97e;
-  --color-sage-500: #7d8f63;
-  --color-sage-600: #62724d;
-  --color-sage-700: #4d593e;
-  --color-sage-800: #404934;
-  --color-sage-900: #373f2e;
-  --color-sage-950: #1c2116;
+  --color-ocean-50: #f0f9ff;
+  --color-ocean-100: #e0f2fe;
+  --color-ocean-200: #bae6fd;
+  --color-ocean-300: #7dd3fc;
+  --color-ocean-400: #38bdf8;
+  --color-ocean-500: #0ea5e9;
+  --color-ocean-600: #0284c7;
+  --color-ocean-700: #0369a1;
+  --color-ocean-800: #075985;
+  --color-ocean-900: #0c4a6e;
+  --color-ocean-950: #082f49;
 
-  --color-warm-50: #fdfaf6;
-  --color-warm-100: #f9f1e5;
-  --color-warm-200: #f2e0c8;
-  --color-warm-300: #e9c9a3;
-  --color-warm-400: #ddaa7a;
-  --color-warm-500: #d4915a;
-  --color-warm-600: #c67a4e;
-  --color-warm-700: #a56142;
-  --color-warm-800: #854f3b;
-  --color-warm-900: #6c4233;
-  --color-warm-950: #3a2019;
+  --color-driftwood-50: #faf8f5;
+  --color-driftwood-100: #f2ebe1;
+  --color-driftwood-200: #e8dbca;
+  --color-driftwood-300: #dcc6af;
+  --color-driftwood-400: #cfad90;
+  --color-driftwood-500: #c29370;
+  --color-driftwood-600: #a37554;
+  --color-driftwood-700: #855c41;
+  --color-driftwood-800: #6b4935;
+  --color-driftwood-900: #563c2c;
+  --color-driftwood-950: #2e1f16;
 
-  --color-cream-50: #fefdfb;
-  --color-cream-100: #fdf9f3;
-  --color-cream-200: #faf2e5;
-  --color-cream-300: #f5e7d1;
-  --color-cream-400: #eed6b5;
-  --color-cream-500: #e5c39a;
+  --color-sand-50: #f7f3eb;
+  --color-sand-100: #f0e8da;
+  --color-sand-200: #eaddc5;
+  --color-sand-300: #e8dec7;
+  --color-sand-400: #dfceab;
+  --color-sand-500: #d4bc8f;
+
+  --color-gold-400: #e6c35c;
+  --color-gold-500: #d4af37;
+  --color-gold-600: #b8962b;
 
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-serif: 'Playfair Display', Georgia, serif;
@@ -60,21 +64,21 @@ html {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-cream-100);
+  background: var(--color-sand-100);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-sage-300);
+  background: var(--color-ocean-300);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-sage-400);
+  background: var(--color-ocean-400);
 }
 
 /* Body defaults */
 body {
   font-family: var(--font-sans);
-  background-color: var(--color-cream-50);
-  color: var(--color-sage-900);
+  background-color: var(--color-sand-50);
+  color: var(--color-ocean-900);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
